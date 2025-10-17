@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -52,6 +53,7 @@ class UsersSeeder extends Seeder
             );
 
             $newUser->syncRoles([$u['role']]);
+            Post::factory(6)->for($newUser)->create();
         }
 
     }

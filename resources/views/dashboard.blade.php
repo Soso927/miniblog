@@ -5,13 +5,21 @@
         </h2>
     </x-slot>
 
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
+                    @can('posts.publish')
+                        <p>Vous pouvez publier des articles.</p>
+                    @endcan
                 </div>
             </div>
         </div>
     </div>
+    @role('admin')
+        <a href="{{ route('admin.home') }}" class="underline text-indigo-600">Aller à l’espace admin</a>
+    @endrole
+
 </x-app-layout>
