@@ -25,3 +25,22 @@ Route::get('/admin', function () {
 Route::get('/', [PostController::class, 'publicIndex'])->name('home');
 
 require __DIR__.'/auth.php';
+
+
+Route::prefix('dashboard')
+    ->name('posts.')
+    ->middleware(['auth','verified'])
+    ->group(function () {
+        Route::get('/posts',        [PostController::class, 'index'])->name('index');
+        Route::get('/posts/create', [PostController::class, 'create'])->name('create')->middleware('permission:posts.create');
+        Route::post('/posts',       [PostController::class, 'store'])->name('store')->middleware('permission:posts.create');
+
+        Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit');
+        Route::put('/posts/{post}',      [PostController::class, 'update'])->name('update');
+
+        Route::delete('/posts/{post}',   [PostController::class, 'destroy'])->name('destroy');
+
+        // publication / dépublication (réservé aux éditeurs/admin via permission)
+        Route::post('/posts/{post}/publish',   [PostController::class, 'publish'])->name('publish')->middleware('permission:posts.publish');
+        Route::post('/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('unpublish')->middleware('permission:posts.publish');
+    });
