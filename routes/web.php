@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,5 +21,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin', function () {
     return 'Zone admin : accès réservé';
 })->middleware(['auth', 'role:admin'])->name('admin.home');
+
+Route::get('/', [PostController::class, 'publicIndex'])->name('home');
 
 require __DIR__.'/auth.php';
