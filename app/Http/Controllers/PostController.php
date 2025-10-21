@@ -105,4 +105,10 @@ class PostController extends Controller
         return back()->with('status', 'Article dé-publié.');
     }
 
+    public function publicShow(Post $post)
+{
+    $this->authorize('view', $post);
+    return view('posts.public-show', compact('post'));
+}
+
 }

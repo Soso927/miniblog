@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class postPolicy
+class PostPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,9 +19,13 @@ class postPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+       public function view(?User $user, Post $post): bool
     {
-        return false;
+        if ($post->status === 'published') {
+            return true;
+        }
+
+        return $user?->id === $post->user_id || $user?->hasRole(['editor','admin']);
     }
 
     /**

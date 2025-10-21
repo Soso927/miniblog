@@ -4,7 +4,11 @@
 
         @foreach ($posts as $post)
             <article class="border rounded-lg p-4">
-                <h2 class="text-xl font-semibold">{{ $post->title }}</h2>
+                <h2 class="text-xl font-semibold">
+                    <a href="{{ route('posts.public.show', $post->slug) }}" class="underline">
+                        {{ $post->title }}
+                    </a>
+                </h2>
                 <p class="text-sm text-gray-500">
                     Publié le {{ optional($post->published_at)->format('d/m/Y') }}
                     par {{ $post->user->name }}
